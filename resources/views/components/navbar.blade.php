@@ -15,8 +15,8 @@
             @endauth
 
             @guest
-                <a class="btn-sm hover:border-teal-300 hover:text-teal-500" href="#">Login</a>
-                <a class="btn-sm border-neutral-300 hover:border-teal-300 hover:bg-teal-500 hover:text-white" href="#">Register</a>
+                <a class="btn-sm" href="#">Login</a>
+                <a class="btn-sm-bordered" href="#">Register</a>
             @endguest
         </div>
     </nav>
