@@ -7,7 +7,8 @@
         'type' => $type,
         'class' => 'w-full p-2 border-2 border-neutral-400 outline-none ring-teal-500/50 focus:ring-4 focus:border-teal-400',
         'placeholder' => $placeholder,
-        'required' => $required
+        'required' => $required,
+        'value' => old($name)
     ];
 @endphp
 
