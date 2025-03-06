@@ -23,7 +23,7 @@
     <x-navbar />
 
 
-    <main class="pt-16 max-w-7xl mx-auto">
+    <main class="pt-14 max-w-7xl mx-auto">
         {{ $slot }}
     </main>
 
