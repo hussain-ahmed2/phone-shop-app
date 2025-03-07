@@ -21,18 +21,24 @@
         </div>
     </div>
 
-    <div id="shop" class="py-16 bg-neutral-100">
+    <div id="featured" class="py-16 bg-neutral-100">
         <div class="max-w-7xl mx-auto text-center">
             <h2 class="text-3xl font-bold">Featured Phones</h2>
             <p class="mt-4 text-lg text-neutral-600">Explore some of our best sellers and latest arrivals.</p>
             <!-- Add featured phone items here -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+                @foreach ($phones as $phone)
+                    <x-phone.phone-card :$phone />
+                @endforeach
+            </div>
         </div>
     </div>
 
     <div id="about" class="py-16">
         <div class="max-w-7xl mx-auto text-center">
             <h2 class="text-3xl font-bold text-teal-600">About Us</h2>
-            <p class="mt-4 text-lg text-neutral-700">We are passionate about bringing you the best phone models with the best customer service. Your satisfaction is our priority.</p>
+            <p class="mt-4 text-lg text-neutral-700">We are passionate about bringing you the best phone models with the
+                best customer service. Your satisfaction is our priority.</p>
         </div>
     </div>
 </x-layout>
