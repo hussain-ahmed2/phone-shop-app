@@ -40,15 +40,20 @@
                 <div class="mt-4 bg-white p-6-lg shadow-lg">
                     <ul>
                         @foreach ($activities as $activity)
-                            <li class="p-2 border-b border-neutral-300">
-                                <span class="text-teal-600 font-semibold">{{ $activity->activity_type }}</span>:
-                                {{ $activity->description }}
+                            <li class="p-3 border-b border-neutral-300">
+                                <p>
+                                    <span class="text-teal-600 font-semibold">{{ $activity->activity_type }}</span>:
+                                    {{ $activity->description }}
+                                </p>
+                                <p class="text-sm text-neutral-500 mt-1">{{ $activity->created_at }}</p>
                             </li>
                         @endforeach
                     </ul>
                 </div>
             </div>
-
+            <div class="mt-5">
+                {{ $activities->links('pagination::custom') }}
+            </div>
         </div>
     </div>
 </x-layout>

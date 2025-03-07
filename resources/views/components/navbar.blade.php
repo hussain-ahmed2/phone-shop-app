@@ -4,8 +4,8 @@
 
         <div class="flex space-x-5">
             <a class="nav-link" href="/">Home</a>
-            <a class="nav-link" href="#">Featured</a>
-            <a class="nav-link" href="#">Latest</a>
+            <a class="nav-link" href="#featured">Featured</a>
+            <a class="nav-link" href="/phones">Phones</a>
             <a class="nav-link" href="#">About Us</a>
         </div>
 
