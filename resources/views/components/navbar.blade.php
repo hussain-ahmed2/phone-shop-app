@@ -3,10 +3,10 @@
         <a href="#" class="logo">Phones</a>
 
         <div class="flex space-x-5">
-            <a class="nav-link" href="/">Home</a>
-            <a class="nav-link" href="#featured">Featured</a>
-            <a class="nav-link" href="/phones">Phones</a>
-            <a class="nav-link" href="#">About Us</a>
+            <a class="nav-link {{ Request::is('/') ? 'text-teal-500' : '' }}" href="/">Home</a>
+            <a class="nav-link " href="/#featured">Featured</a>
+            <a class="nav-link {{ Request::is('phones') ? 'text-teal-500' : '' }}" href="/phones">Phones</a>
+            <a class="nav-link" href="/#about-us">About Us</a>
         </div>
 
         <div class="flex items-center space-x-5">
@@ -14,8 +14,12 @@
                 @if (Auth::user()->is_admin)
                     <a class="btn-sm" href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
                 @else
-                    <a class="btn-sm-bordered" href="/cart">Cart</a>
-                    <a class="btn-sm" href="{{ route('user.dashboard') }}">Dashboard</a>
+                    <a class="btn-sm-bordered relative {{ Request::is('cart') ? 'ring-4 border-teal-500 text-white bg-teal-500' : '' }}" href="/cart">Cart
+                        <div class="absolute -top-2 -right-2 border aspect-square h-5 rounded-full grid place-content-center font-light text-sm text-neutral-700 {{ Request::is('cart') ? 'border-teal-500 bg-white text-teal-500' : 'bg-white' }}">
+                            {{ Auth::user()->cart ? count(Auth::user()->cart->items) : 0 }}
+                        </div>
+                    </a>
+                    <a class="btn-sm {{ Request::is('dashboard') ? 'ring-4 border-teal-500 text-white bg-teal-500' : '' }}" href="/dashboard">Dashboard</a>
                 @endif
                 <form method="POST" action="/logout">
                     @csrf

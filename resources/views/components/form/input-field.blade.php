@@ -19,7 +19,7 @@
     @if ($label)
         <label class="font-medium" for="{{ $name }}">{{ $label }}</label>
     @endif
-    <x-form.input :$defaults />
+    <input {{ $attributes($defaults) }} />
 
     @error($name)
         <p class="text-sm text-rose-500 mt-0.5">{{ $message }}</p>
