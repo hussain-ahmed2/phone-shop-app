@@ -22,4 +22,9 @@ class Phone extends Model
     protected $casts = [
         'specs' => 'array', // Auto-cast JSON field to array
     ];
+
+    public function cartItem()
+    {
+        return $this->belongsToMany(CartItem::class);
+    }
 }
