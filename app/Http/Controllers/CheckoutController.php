@@ -2,66 +2,70 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart as ModelsCart;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
     // Display the checkout page
     public function index()
     {
-        // Get the cart items and the total amount
-        $cartItems = ModelsCart::getContent();
-        $totalAmount =  0;
+        $cart = Auth::user()->cart;
+        $cartItems = $cart ? $cart->items()->with('phone')->get() : collect();
 
-        foreach ($cartItems as $item) {
-            $totalAmount += $item['price'] * $item['quantity'];
-        };
+        // Calculate the total price
+        $total = $cartItems->sum(function ($item) {
+            return $item->quantity * $item->phone->price;
+        });
 
-        return view('checkout.index', compact('cartItems', 'totalAmount'));
+        return view('checkout.index', compact('cartItems', 'total'));
     }
 
-    // Handle the checkout process (store order)
+    // Process the checkout and create an order
     public function store(Request $request)
     {
-        // Validate the checkout form (shipping details, etc.)
-        $request->validate([
-            'firstname' => 'required|min:2',
-            'lastname' => 'required|min:2',
-            'address' => 'required',
-            'city' => 'required',
-            'email' => 'required|email',
-        ]);
+        $cart = Auth::user()->cart;
+        $cartItems = $cart ? $cart->items()->with('phone')->get() : collect();
 
-        // Get user data and cart info
-        $cartItems = Cart::getContent();
-        $totalAmount = Cart::getTotal();
+        if ($cartItems->isEmpty()) {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
+        }
 
-        // Create an order record in the database (optional, if you want to store orders)
+        // Calculate the total price
+        $total = $cartItems->sum(function ($item) {
+            return $item->quantity * $item->phone->price;
+        });
+
+        // Create the order
         $order = Order::create([
-            'user_id' => auth()->id(),
-            'firstname' => $request->firstname,
-            'lastname' => $request->lastname,
-            'email' => $request->email,
-            'address' => $request->address,
-            'city' => $request->city,
-            'total_amount' => $totalAmount,
-            'status' => 'pending', // You can change the status as needed
+            'user_id' => Auth::id(),
+            'total_price' => $total,
+            'status' => 'pending',
         ]);
 
-        // Attach cart items to the order (optional)
+        // Create order items
         foreach ($cartItems as $item) {
-            $order->items()->create([
-                'product_id' => $item->id,
+            OrderItem::create([
+                'order_id' => $order->id,
+                'phone_id' => $item->phone->id,
                 'quantity' => $item->quantity,
-                'price' => $item->price,
+                'price' => $item->phone->price,
             ]);
         }
 
-        // Clear the cart after order
-        Cart::clear();
+        // Empty the cart
+        $cart->items()->delete();
 
-        // Redirect the user to a thank you page or show a success message
-        return redirect()->route('home')->with('success', 'Your order has been placed successfully!');
+        // Redirect to the order confirmation page
+        return redirect("/checkout/confirmation/{$order->id}")->with('success', 'Order placed successfully!');
+    }
+
+    // Show the order confirmation page
+    public function confirmation($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        return view('checkout.confirmation', compact('order'));
     }
 }
