@@ -122,12 +122,35 @@ class AdminController extends Controller
 
         return redirect('/admin/phones')->with('success', 'Phone deleted successfully!');
     }
-    
-    public function orders() 
-    {
-        $orders = Order::all(); // Fetch all phones from the database
 
+    public function orders()
+    {
+        $orders = Order::with('items.phone', 'user')
+                       ->orderBy('created_at', 'desc')
+                       ->paginate(10);
         return view('admin.orders.index', compact('orders'));
+    }
+
+    // Show the form for editing an order
+    public function edit_order(Order $order)
+    {
+        return view('admin.orders.edit', compact('order'));
+    }
+
+    // Update the order
+    public function update_order(Request $request, Order $order)
+    {
+        // Validate the input
+        $validated = $request->validate([
+            'status' => ['required', 'in:pending,shipped,delivered,cancelled'],
+        ]);
+
+        // Update the order's status
+        $order->status = $validated['status'];
+        $order->save();
+
+        // Redirect back with success message
+        return redirect('/admin/orders')->with('success', 'Order updated successfully!');
     }
 
     
