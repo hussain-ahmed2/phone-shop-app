@@ -43,8 +43,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 
-    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
-    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout', [CheckoutController::class, 'store']);
+    Route::get('/checkout/confirmation/{orderId}', [CheckoutController::class, 'confirmation'])->name('checkout.confirmation');
 });
 
 
@@ -61,6 +62,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/admin/phones/{id}', [AdminController::class, 'delete_phone']);
 
     Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders.index');
+    Route::get('/admin/orders/{order}/edit', [AdminController::class, 'edit_order']); 
+    Route::put('/admin/orders/{order}', [AdminController::class, 'update_order']); 
+
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users.index');
     Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings.index');
 });
