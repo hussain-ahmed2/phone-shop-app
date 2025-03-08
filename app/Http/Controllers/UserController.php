@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $orders = Order::where('user_id', Auth::id())->latest()->take(5)->get();
+        $orders = Order::where('user_id', Auth::id())->latest()->take(3)->get();
         return view('auth.dashboard', compact('orders'));
     }
 
