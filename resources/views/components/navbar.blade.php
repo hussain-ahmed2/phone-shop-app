@@ -1,6 +1,6 @@
 <header class="bg-white fixed w-full shadow-sm">
     <nav class="max-w-7xl mx-auto px-5 border-neutral-300 min-h-14 flex items-center justify-between">
-        <a href="#" class="logo">Phones</a>
+        <a href="/" class="logo">Phones</a>
 
         <div class="flex space-x-5">
             <a class="nav-link {{ Request::is('/') ? 'text-teal-500' : '' }}" href="/">Home</a>

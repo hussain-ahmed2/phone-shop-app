@@ -31,7 +31,7 @@
                     @foreach($orders as $order)
                         <li class="p-4 bg-white shadow">
                             <p><strong>Order #{{ $order->id }}</strong></p>
-                            <p class="text-neutral-600">Total: ${{ $order->total }}</p>
+                            <p class="text-neutral-600">Total: ${{ $order->total_price }}</p>
                             <p class="text-neutral-500 text-sm">Placed on: {{ $order->created_at->format('F d, Y') }}</p>
                             <a href="/orders/{{ $order->id }}" class="text-teal-600 font-semibold">View Details</a>
                         </li>
