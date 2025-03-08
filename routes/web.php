@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PhoneController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
@@ -9,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 
 // Home
 Route::view('/', 'index', ['phones' => Phone::latest()->take(3)->get()]);
+
+// Phones
+Route::get('/phones', [PhoneController::class, 'index'])->name('phones');
+Route::get('/phones/{phone}', [PhoneController::class, 'show'])->name('phones.show');
+
 
 // User Register and Login
 Route::middleware('guest')->group(function () {
@@ -24,7 +33,20 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::delete('/logout', [SessionController::class, 'destroy'])->name('logout');
     Route::get('/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+    Route::get('/profile', [UserController::class, 'edit'])->name('user.profile');
+    Route::post('/profile', [UserController::class, 'update']);
+
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add/{phone}', [CartController::class, 'add'])->name('cart.add');
+    Route::delete('/cart/remove/{phone}', [CartController::class, 'remove'])->name('cart.remove');
+
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 });
+
 
 // Admin Dashboard (Only Admins)
 Route::middleware(['auth', 'admin'])->group(function () {
