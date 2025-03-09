@@ -160,6 +160,34 @@ class AdminController extends Controller
 
         return view('admin.users.index', compact('users'));
     }
+
+    public function edit_user($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.users.edit', compact('user'));
+    }
+
+    public function update_user(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        
+        $request->validate([
+            'firstname' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email,' . $id ],
+            'role' => ['required', 'boolean'],
+        ]);
+
+        $user->update([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'email' => $request->email,
+            'is_admin' => $request->boolean('role'),
+        ]);
+
+        return redirect('/admin/users')->with('success', 'User updated successfully');
+    }
     
     public function settings() 
     {
