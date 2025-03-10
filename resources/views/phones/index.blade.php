@@ -12,8 +12,10 @@
 
             <!-- Search Form -->
             <form action="/phones" method="GET" class="mt-8 flex justify-center">
-                <x-form.input-field name='search' placeholder="Search phones..." class="min-w-md bg-white" value="{{ request()->query('search') }}" />
-                <x-form.button-submit class="max-w-fit px-6">Search</x-form.button-submit>
+                <x-form.input-field name='search' placeholder="Search phones..." class="min-w-52 sm:min-w-sm md:min-w-md w-full bg-white h-11" value="{{ request()->query('search') }}" />
+                <x-form.button-submit class="max-w-fit border-0 h-11 px-3 flex justify-center items-center">
+                    <box-icon name='search' ></box-icon>
+                </x-form.button-submit>
             </form>
         </div>
     </div>
