@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap"
         rel="stylesheet">
-
+    
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -26,14 +26,17 @@
     <main class="py-14 max-w-7xl mx-auto min-h-[calc(100vh-12.75rem)]">
         <!-- Global Flash Messages -->
         @if (session('success'))
-            <div class="bg-green-100 text-green-800 p-4 rounded mb-6 flex justify-between items-center transition-all duration-300 origin-top">
+            <div
+                class="bg-green-100 text-green-800 p-4 rounded mb-6 flex justify-between items-center transition-all duration-300 origin-top">
                 {{ session('success') }}
-                <button onclick="this.parentElement.classList.add('scale-y-0', 'h-0')" class="text-3xl cursor-pointer px-2 transition-all duration-300 origin-top">&times;</button>
+                <button onclick="this.parentElement.classList.add('scale-y-0', 'h-0')"
+                    class="text-3xl cursor-pointer px-2 transition-all duration-300 origin-top">&times;</button>
             </div>
         @elseif (session('error'))
             <div class="bg-red-100 text-red-800 p-4 rounded mb-6 flex justify-between items-center">
                 {{ session('error') }}
-                <button onclick="this.parentElement.classList.add('scale-y-0', 'h-0')" class="text-3xl cursor-pointer px-2 transition-all duration-300 origin-top">&times;</button>
+                <button onclick="this.parentElement.classList.add('scale-y-0', 'h-0')"
+                    class="text-3xl cursor-pointer px-2 transition-all duration-300 origin-top">&times;</button>
             </div>
         @endif
 
@@ -63,6 +66,7 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 
 </body>
 
