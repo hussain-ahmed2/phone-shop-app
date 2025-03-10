@@ -1,18 +1,18 @@
 <x-layout>
     <x-slot:pageTitle>Shopping Cart</x-slot:pageTitle>
 
-    <div class="container mx-auto py-8">
+    <div class="py-8 px-5">
         <h1 class="text-3xl font-bold mb-6">Your Cart</h1>
 
         @if (count($cartItems) > 0)
-            <div class="bg-white p-6 shadow-lg">
+            <div class="bg-white p-6 shadow-lg max-md:text-sm">
                 <table class="min-w-full table-auto">
                     <thead>
                         <tr>
-                            <th class="px-4 py-2 w-1/4">Product</th>
-                            <th class="px-4 py-2 w-1/4">Quantity</th>
-                            <th class="px-4 py-2 w-1/4">Price</th>
-                            <th class="px-4 py-2 w-1/4">Actions</th>
+                            <th class="md:px-4 py-2">Product</th>
+                            <th class="md:px-4 py-2">Quantity</th>
+                            <th class="md:px-4 py-2">Price</th>
+                            <th class="md:px-4 py-2">Actions</th>
                         </tr>
                     </thead>
 
@@ -33,14 +33,15 @@
                                     <p>{{ number_format($item->phone->price, 2) }}</p>
                                 </td>
                                 <td class="border px-4 py-2">
-                                    <div class="flex gap-5 mx-auto w-fit">
-                                        <a class="text-teal-500 hover:underline" href="/cart/{{ $item->id }}/edit">Edit</a>
+                                    <div class="flex gap-1 mx-auto w-fit flex-wrap">
+                                        <a class="hover:bg-teal-200 rounded-full aspect-square h-8 flex justify-center items-center" href="/cart/{{ $item->id }}/edit">
+                                        <box-icon name='edit-alt'></box-icon></a>
                                         <form action="/cart/remove/{{ $item->phone->id }}" method="POST"
                                             class="">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="text-rose-500 cursor-pointer hover:underline">Remove</button>
+                                                class="hover:bg-rose-200 rounded-full aspect-square h-8 flex justify-center items-center"><box-icon name='trash' ></box-icon></button>
                                         </form>
                                     </div>
                                 </td>
